@@ -116,7 +116,8 @@ function App() {
         //setTodoLists(todoLists.filter(tl => tl.id !== toDoListID))
         const action = removeTodolistAC(toDoListID)
 
-        dispatchTodolists(removeTodolistAC(toDoListID))
+        dispatchTodolists(action)
+        dispatchTasks(action)
     }
 
     function addTodolist(title: string) {
