@@ -1,14 +1,11 @@
 import React from 'react';
 
-type PropsType = {
-    name: string,
-    callBack: ()=> void
-   /* color?: string
-    size?: number*/
+type ButtonPropsType = {
+    name: string
+    callBack: () => void
 }
+export const Button = (props: ButtonPropsType) => {
 
-
-export const Button = (props: PropsType) => {
     const onClickHandler = () => {
         props.callBack()
     }
@@ -17,4 +14,3 @@ export const Button = (props: PropsType) => {
     );
 };
 
-export default Button;
