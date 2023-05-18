@@ -1,25 +1,34 @@
 import React, {useState} from 'react';
 import './App.css';
 import {Todolist} from './Todolist';
-import {v1} from "uuid";
+import {v1} from 'uuid';
 
 export type FilterValuesType = "all" | "active" | "completed";
 
 function App() {
 
     let [tasks, setTasks] = useState([
-        { id: v1(), title: "HTML&CSS", isDone: true },
-        { id: v1(), title: "JS", isDone: true },
-        { id: v1(), title: "ReactJS", isDone: false },
-        { id: v1(), title: "Rest API", isDone: false },
-        { id: v1(), title: "GraphQL", isDone: false },
+        {id: v1(), title: "HTML&CSS", isDone: true},
+        {id: v1(), title: "JS", isDone: true},
+        {id: v1(), title: "ReactJS", isDone: false},
+        {id: v1(), title: "Rest API", isDone: false},
+        {id: v1(), title: "GraphQL", isDone: false},
     ]);
 
     function removeTask(id: string) {
-        let filteredTasks = tasks.filter(t => t.id !== id);
+        let filteredTasks = tasks.filter(t => t.id != id);
         setTasks(filteredTasks);
     }
 
+    function addTask(title: string) {
+        let task = {id: v1(), title: title, isDone: false};
+        let newTasks = [task, ...tasks];
+        setTasks(newTasks);
+    }
+
+    const changeStatus = (taskId:string, isDoneStatus: boolean) => {
+       setTasks(tasks.map(el => el.id === taskId ? {...el, isDone: isDoneStatus} : el))
+    }
     let [filter, setFilter] = useState<FilterValuesType>("all");
 
     let tasksForTodolist = tasks;
@@ -35,10 +44,6 @@ function App() {
         setFilter(value);
     }
 
-    const addNewTask = (newTask: string)=> {
-        let nextTask = {id: v1(), title: newTask, isDone: false}
-        setTasks([nextTask, ...tasks])
-    }
 
     return (
         <div className="App">
@@ -46,10 +51,10 @@ function App() {
                       tasks={tasksForTodolist}
                       removeTask={removeTask}
                       changeFilter={changeFilter}
-                      addNewTask={addNewTask}/>
+                      addTask={addTask}
+                      changeStatus={changeStatus}/>
         </div>
     );
 }
 
 export default App;
-
