@@ -76,7 +76,7 @@ function App() {
         setTodolist(todoList.map(tl => tl.id === todoListID ? {...tl, filter: value} : tl));
     }
 
-    function addToDoListFilter() {
+    function addTodolist() {
     }
 
     function removeToDoList(toDoListID: string) {
