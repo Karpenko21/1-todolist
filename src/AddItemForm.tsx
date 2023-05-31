@@ -1,49 +1,47 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
-import styles from "./Todolist.module.css";
+import React, {ChangeEvent, FC, KeyboardEvent, useState} from 'react';
 
 type AddItemFormPropsType = {
-    addItem: (title:string) => void
+    addItem: (title: string) => void
 }
+const AddItemForm: FC<AddItemFormPropsType> = (props) => {
 
-const AddItemForm: React.FC<AddItemFormPropsType> = (props) => {
+    let [title, setTitle] = useState("")
+    let [error, setError] = useState<string | null>(null)
 
-    const [title, setTitle] = useState("")
-    const [error, setError] = useState<boolean>(false)
-
-    const userError = 'Title is required'
-
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setTitle(e.currentTarget.value)
-        setError(false)
-    }
-
-    const addItem = () => {
-        if (title.trim()) {
-            props.addItem(title.trim());
+    const addTask= () => {
+        let newTitle = title.trim();
+        if (newTitle !== "") {
+            props.addItem(newTitle)
             setTitle("");
         } else {
-            setError(true)
+            setError("Title is required");
         }
     }
 
+    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setTitle(e.currentTarget.value)
+    }
+
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === "Enter") {
-            addItem();
+        setError(null);
+        if (e.charCode === 13) {
+            addTask();
         }
     }
 
     return (
-        <div>
 
+
+
+        <div>
             <input value={title}
                    onChange={onChangeHandler}
                    onKeyPress={onKeyPressHandler}
-                   className={error ? styles.error   : ""}
+                   className={error ? "error" : ""}
             />
-            <button onClick={addItem}>+</button>
-            <div className={error ? styles.errorMessage : ""}>
-                {error ? userError : ''}
-            </div>
+            <button onClick={addTask}>+</button>
+            {error && <div className="error-message">{error}</div>}
+
         </div>
     );
 };
