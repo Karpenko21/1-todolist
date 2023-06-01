@@ -83,6 +83,9 @@ function App() {
             setTodolists([...todolists])
         }
     }
+    function changeTodolistTitle(title: string, todolistId: string) {
+            setTodolists(todolists.map(tl => tl.id === todolistId ? {...tl, title} : tl))
+    }
 
     function removeTodolist(id: string) {
         // засунем в стейт список тудулистов, id которых не равны тому, который нужно выкинуть
@@ -131,6 +134,7 @@ function App() {
                         changeTaskTitle={changeTaskTitle}
 
                         changeTodolistFilter={changeTodolistFilter}
+                        changeTodolistTitle={changeTodolistTitle}
                         removeTodolist={removeTodolist}
                         addTodolist={addTodolist}
                     />
