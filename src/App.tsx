@@ -3,7 +3,19 @@ import './App.css';
 import {TaskType, Todolist} from './Todolist';
 import {v1} from 'uuid';
 import AddItemForm from "./AddItemForm";
-import {Button} from "@mui/material";
+import {
+    AppBar,
+    Toolbar,
+    Checkbox,
+    FormControlLabel,
+    FormGroup,
+    IconButton,
+    Typography,
+    Button,
+    Container, Grid, Paper, ThemeProvider, createTheme
+} from "@mui/material";
+import {Menu} from "@mui/icons-material";
+import {amber, lightGreen} from "@mui/material/colors";
 
 
 export  type TodolistType = {
@@ -71,7 +83,7 @@ function App() {
             [todoListID]: tasks[todoListID].map(el => el.id === taskId ? {...el, isDone: checkedValue} : el)
         })
     }
-    const changeTasksTitle = (taskId: string, newTitle:string, todoListID: string) => {
+    const changeTasksTitle = (taskId: string, newTitle: string, todoListID: string) => {
         setTasks({
             ...tasks,
             [todoListID]: tasks[todoListID].map(el => el.id === taskId ? {...el, title: newTitle} : el)
@@ -112,44 +124,95 @@ function App() {
             }
 
 
-            /*const filteredTasks = () => {
+            /*  const filteredTasks: TaskType = () => {
 
-                let tasksForTodolist = tasks[tl.id];
+                  let tasksForTodolist = tasks[tl.id];
 
-                if (tl.filter === "active") {
-                    return tasksForTodolist = tasks[tl.id].filter(t => !t.isDone);
-                } else if (filter === "completed") {
-                    return tasksForTodolist = tasks[tl.id].filter(t => t.isDone);
-                }
-                return tasksForTodolist
-            }*/
-
+                  if (tl.filter === "active") {
+                      return tasksForTodolist = tasks[tl.id].filter(t => !t.isDone);
+                  } else if (tl.filter === "completed") {
+                      return tasksForTodolist = tasks[tl.id].filter(t => t.isDone);
+                  }
+                  return tasksForTodolist
+              }
+  */
             return (
-                <Todolist key={tl.id}
-                          todolistID={tl.id}
-                          title={tl.title}
-                          filter={tl.filter}
+                <Grid item key={tl.id}>
+                    <Paper sx={{"p": "15px"}} elevation={5}>
+                        <Todolist
+                            todolistID={tl.id}
+                            title={tl.title}
+                            filter={tl.filter}
 
-                          tasks={tasksForTodolist}
+                            tasks={tasksForTodolist}
 
-                          removeTask={removeTask}
-                          removeToDoList={removeToDoList}
-                          changeTasksTitle={changeTasksTitle}
-                          changeTodolistTitle={changeTodolistTitle}
+                            removeTask={removeTask}
+                            removeToDoList={removeToDoList}
+                            changeTasksTitle={changeTasksTitle}
+                            changeTodolistTitle={changeTodolistTitle}
 
-                          changeTodoListFilter={changeTodolistFilter}
-                          addTask={addTask}
-                          changeTasksStatus={changeTasksStatus}/>
+                            changeTodoListFilter={changeTodolistFilter}
+                            addTask={addTask}
+                            changeTasksStatus={changeTasksStatus}/>
+                    </Paper>
+                </Grid>
             )
         }
     )
-    return (
-        <div className={"App"}>
-            <AddItemForm addItem={addTodolist}/>
-                {todolistComponents}
-        </div>
-    )
 
+    const myTheme = createTheme({
+            palette: {
+                primary: {
+                    main: '#00695c',
+                },
+                secondary: {
+                    main: '#ba68c8',
+                },
+                mode: "light",
+            }
+        }
+    )
+    return (
+        <ThemeProvider theme={myTheme}>
+            <div className={"App"}>
+                <AppBar position="static">
+                    <Toolbar>
+                        <IconButton
+                            size="large"
+                            edge="start"
+                            color="inherit"
+                            aria-label="menu"
+                            sx={{mr: 2}}
+                        >
+                            <Menu/>
+                        </IconButton>
+                        <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
+                            TodoLists
+                        </Typography>
+                        {/*<FormGroup>
+                        <FormControlLabel
+                            control={<Checkbox
+                                onChange={(e) => setDarkMode(e.currentTarget.checked)}/>}
+                            label={isDarkMode
+                                ? "Dark mode off"
+                                : "Dark mode on"}
+                        />
+                    </FormGroup>*/}
+                        <Button color="inherit">Login</Button>
+                    </Toolbar>
+                </AppBar>
+                <Container fixed>
+                    <Grid container
+                          sx={{"p": "10px 0 10px 0"}}>
+                        <AddItemForm addItem={addTodolist}/>
+                    </Grid>
+                    <Grid container spacing={4}>
+                        {todolistComponents}
+                    </Grid>
+                </Container>
+            </div>
+        </ThemeProvider>
+    );
 }
 
 export default App;

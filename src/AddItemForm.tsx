@@ -1,8 +1,11 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import styles from "./Todolist.module.css";
+import AddCircleSharpIcon from '@mui/icons-material/AddCircleSharp';
+import {IconButton, TextField} from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 type AddItemFormPropsType = {
-    addItem: (title:string) => void
+    addItem: (title: string) => void
 }
 
 const AddItemForm: React.FC<AddItemFormPropsType> = (props) => {
@@ -10,7 +13,7 @@ const AddItemForm: React.FC<AddItemFormPropsType> = (props) => {
     const [title, setTitle] = useState("")
     const [error, setError] = useState<boolean>(false)
 
-    const userError = 'Title is required'
+
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value)
@@ -35,14 +38,24 @@ const AddItemForm: React.FC<AddItemFormPropsType> = (props) => {
     return (
         <div>
 
-            <input value={title}
-                   onChange={onChangeHandler}
-                   onKeyPress={onKeyPressHandler}
-                   className={error ? styles.error   : ""}
+            <TextField
+                variant={"outlined"}
+                color={"secondary"}
+                placeholder={"Please, enter title!"}
+                size={"small"}
+                value={title}
+                onChange={onChangeHandler}
+                onKeyPress={onKeyPressHandler}
+                error={error}
+                helperText={error && 'Title is required!'}
             />
-            <button onClick={addItem}>+</button>
+            <IconButton
+                size="small"
+                color="primary"
+                onClick={addItem}>
+                <AddCircleSharpIcon/>
+            </IconButton>
             <div className={error ? styles.errorMessage : ""}>
-                {error ? userError : ''}
             </div>
         </div>
     );
