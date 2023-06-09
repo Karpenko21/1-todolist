@@ -78,7 +78,6 @@ export function Todolist(props: TodolistPropsType) {
                         const changeTaskTitle = (newTitle: string) => {
                             props.changeTasksTitle(t.id, newTitle, props.todolistID)
                         }
-
                         return <ListItem
                             disablePadding
                             divider

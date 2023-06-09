@@ -6,21 +6,16 @@ import AddItemForm from "./AddItemForm";
 import {
     AppBar,
     Toolbar,
-    Checkbox,
-    FormControlLabel,
-    FormGroup,
     IconButton,
     Typography,
     Button,
     Container, Grid, Paper, ThemeProvider, createTheme
 } from "@mui/material";
 import {Menu} from "@mui/icons-material";
-import {amber, lightGreen} from "@mui/material/colors";
 import {
     addTaskAC,
     changeTasksStatusAC,
     changeTasksTitleAC,
-    createTasksForNewTodolistAC,
     removeTaskAC,
     tasksReducer
 } from "./reducers/tasksReducer";
@@ -119,17 +114,20 @@ function App() {
 
     const removeToDoList = (toDoListID: string) => {
         //setTodoLists(todoLists.filter(tl => tl.id !== toDoListID))
+        const action = removeTodolistAC(toDoListID)
+
         dispatchTodolists(removeTodolistAC(toDoListID))
     }
 
     function addTodolist(title: string) {
-        const newTodolistID = v1()
+       /* const newTodolistID = v1()*/
       /*  const newTodolistID = v1()
         const newTodolist: TodolistType = {id: newTodolistID, title: title, filter: 'all'}
         setTodoLists([newTodolist, ...todoLists])
        setTasks({...tasks, [newTodolistID]: []})*/
-        dispatchTasks(createTasksForNewTodolistAC(newTodolistID))
-        dispatchTodolists(addTodolistAC(title, newTodolistID))
+        const action = addTodolistAC(v1(), title)
+        dispatchTodolists(action)
+        dispatchTasks(action)
     }
 
 
