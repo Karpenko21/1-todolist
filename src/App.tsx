@@ -34,10 +34,10 @@ export  type TodolistType = {
     filter: FilterValuesType
 }
 export type FilterValuesType = "all" | "active" | "completed";
-
 export type TasksStateType = {
     [todolistId: string]: Array<TaskType>
 }
+
 
 function App() {
 
@@ -76,7 +76,6 @@ function App() {
         //setTasks({...tasks, [todoListID]: tasks[todoListID].filter(t => t.id !== id)})
         dispatchTasks(removeTaskAC(id, todoListID))
     }
-
     const addTask = (title: string, todoListID: string) => {
 
         /*     const newTask: TaskType = {id: v1(), title: title.trim(), isDone: false}
@@ -84,7 +83,6 @@ function App() {
 
         dispatchTasks(addTaskAC(title, todoListID))
     }
-
     const changeTasksStatus = (taskId: string, checkedValue: boolean, todoListID: string) => {
         /* setTasks({
              ...tasks,
@@ -106,12 +104,10 @@ function App() {
         //setTodoLists(todoLists.map(tl => tl.id === todoListID ? {...tl, filter: value} : tl));
         dispatchTodolists(changeTodolistFilterAC(value, todoListID))
     }
-
     const changeTodolistTitle = (title: string, todoListID: string) => {
         //setTodoLists(todoLists.map(tl => tl.id === todoListID ? {...tl, title} : tl));
         dispatchTodolists(changeTodolistTitleAC(title,todoListID))
     }
-
     const removeToDoList = (toDoListID: string) => {
         //setTodoLists(todoLists.filter(tl => tl.id !== toDoListID))
         const action = removeTodolistAC(toDoListID)
@@ -119,7 +115,6 @@ function App() {
         dispatchTodolists(action)
         dispatchTasks(action)
     }
-
     function addTodolist(title: string) {
        /* const newTodolistID = v1()*/
       /*  const newTodolistID = v1()
@@ -195,6 +190,7 @@ function App() {
             }
         }
     )
+
     return (
         <ThemeProvider theme={myTheme}>
             <div className={"App"}>
@@ -212,7 +208,7 @@ function App() {
                         <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
                             TodoLists
                         </Typography>
-                        {/*<FormGroup>
+                 {/*       <FormGroup>
                         <FormControlLabel
                             control={<Checkbox
                                 onChange={(e) => setDarkMode(e.currentTarget.checked)}/>}

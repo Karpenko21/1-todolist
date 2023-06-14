@@ -85,6 +85,7 @@ export const changeTasksStatusAC = (taskId: string, checkedValue: boolean, todoL
         payload: {taskId, checkedValue, todoListID}
     } as const
 }
+
 /*
 type CreateTasksForNewTodolistACType = ReturnType<typeof createTasksForNewTodolistAC>
 
