@@ -30,13 +30,16 @@ export const tasksReducer = (state: TasksStateType, action: MainTasksType) => {
                     el.id === action.payload.taskId ? {...el, isDone: action.payload.checkedValue} : el)
             }
         }
+        case "ADD-TODOLIST" : {
+            return {...state, [action.payload.newTodolistID]: []}
+        }
         case 'REMOVE-TODOLIST': {
             const copyState = {...state}
             delete copyState[action.payload.todolistID]
             return copyState
-        }
-        case "ADD-TODOLIST" : {
-            return {...state, [action.payload.newTodolistID]: []}
+
+          /*  const {[action.payload.todolistID]: [], ...rest} = state
+            return rest*/
         }
         default:
             return state
@@ -67,9 +70,9 @@ export const addTaskAC = (title: string, todolistID: string) => {
 }
 
 
-type ChangeTasksTitleACType = ReturnType<typeof changeTasksTitleAC>
+type ChangeTasksTitleACType = ReturnType<typeof changeTaskTitleAC>
 
-export const changeTasksTitleAC = (taskId: string, newTitle: string, todoListID: string) => {
+export const changeTaskTitleAC = (taskId: string, newTitle: string, todoListID: string) => {
     return {
         type: 'CHANGE-TASK-TITLE',
         payload: {taskId, newTitle, todoListID}
@@ -77,22 +80,13 @@ export const changeTasksTitleAC = (taskId: string, newTitle: string, todoListID:
 }
 
 
-type ChangeTasksStatusACType = ReturnType<typeof changeTasksStatusAC>
+type ChangeTasksStatusACType = ReturnType<typeof changeTaskStatusAC>
 
-export const changeTasksStatusAC = (taskId: string, checkedValue: boolean, todoListID: string) => {
+export const changeTaskStatusAC = (taskId: string, checkedValue: boolean, todoListID: string) => {
     return {
         type: 'CHANGE-TASK-STATUS',
         payload: {taskId, checkedValue, todoListID}
     } as const
 }
 
-/*
-type CreateTasksForNewTodolistACType = ReturnType<typeof createTasksForNewTodolistAC>
-
-export const createTasksForNewTodolistAC = (newTodolistID: string) => {
-    return {
-        type: 'CREATE-TASKS-FOR-NEW-TODOLIST',
-        payload: {newTodolistID}
-    } as const
-}*/
 

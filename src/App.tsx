@@ -14,8 +14,8 @@ import {
 import {Menu} from "@mui/icons-material";
 import {
     addTaskAC,
-    changeTasksStatusAC,
-    changeTasksTitleAC,
+    changeTaskStatusAC,
+    changeTaskTitleAC,
     removeTaskAC,
     tasksReducer
 } from "./reducers/tasksReducer";
@@ -88,7 +88,7 @@ function App() {
              ...tasks,
              [todoListID]: tasks[todoListID].map(el => el.id === taskId ? {...el, isDone: checkedValue} : el)
          })*/
-        dispatchTasks(changeTasksStatusAC(taskId, checkedValue, todoListID))
+        dispatchTasks(changeTaskStatusAC(taskId, checkedValue, todoListID))
     }
     const changeTasksTitle = (taskId: string, newTitle: string, todoListID: string) => {
         /* setTasks({
@@ -96,13 +96,13 @@ function App() {
              [todoListID]: tasks[todoListID].map(el => el.id === taskId ? {...el, title: newTitle} : el)
          })*/
 
-        dispatchTasks(changeTasksTitleAC(taskId, newTitle, todoListID))
+        dispatchTasks(changeTaskTitleAC(taskId, newTitle, todoListID))
     }
 
 
     const changeTodolistFilter = (value: FilterValuesType, todoListID: string) => {
         //setTodoLists(todoLists.map(tl => tl.id === todoListID ? {...tl, filter: value} : tl));
-        dispatchTodolists(changeTodolistFilterAC(value, todoListID))
+        dispatchTodolists(changeTodolistFilterAC(todoListID, value))
     }
     const changeTodolistTitle = (title: string, todoListID: string) => {
         //setTodoLists(todoLists.map(tl => tl.id === todoListID ? {...tl, title} : tl));
@@ -111,7 +111,6 @@ function App() {
     const removeToDoList = (toDoListID: string) => {
         //setTodoLists(todoLists.filter(tl => tl.id !== toDoListID))
         const action = removeTodolistAC(toDoListID)
-
         dispatchTodolists(action)
         dispatchTasks(action)
     }
@@ -121,7 +120,8 @@ function App() {
         const newTodolist: TodolistType = {id: newTodolistID, title: title, filter: 'all'}
         setTodoLists([newTodolist, ...todoLists])
        setTasks({...tasks, [newTodolistID]: []})*/
-        const action = addTodolistAC(v1(), title)
+        //const action = addTodolistAC(v1(), title)
+        const action = addTodolistAC(title)
         dispatchTodolists(action)
         dispatchTasks(action)
     }
